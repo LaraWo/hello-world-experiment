@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body></body>
+  <script>
+      /*create a timeline */
+var timeline = [];
+var welcome = {
+  type: "html-keyboard-response",
+  stimulus: "Welcome to the experiment. Thank you for participating. Press any key to start the experiment."
+};
+/* Wilkommensnachricht im array timeline anzeigen lassen*/
+timeline.push(welcome);
+/* Instruktionen für das Experiment*/
+var instructions = {
+      type: "html-keyboard-response",
+      stimulus: "<p>In this experiment, a cross will appear in the center " +
+          "of the screen.</p><p>If the cross is <strong>blue</strong>, " +
+          "press the letter <strong>B</strong> on the keyboard as fast as you can.</p>" +
+          "<p>If the circle is <strong>orange</strong>, press the letter <strong>O</strong> " +
+          "as fast as you can.</p>" +
+          /* Pixel sagt wie weit Bilder entfernt sind */
+          "<div style='width: 1000px;'>"+
+          /* float sagt ob Bild rechts oder links ist*/
+          /* was bedeutet class small?*/
+          "<div style='float: right;'><img src='img/cross_blue.png'></img>" +
+          "<p class='small'><strong>Press the B key</strong></p></div>" +
+          "<div class='float: left;'><img src='img/cross_orange.png'></img>" +
+          "<p class='small'><strong>Press the O key</strong></p></div>" +
+          "</div>"+
+          "<p>Press any key to begin.</p>",
+          /*sagt mir wie schnell die Bilder nacheinander kommen*/
+      post_trial_gap: 1000
+    };
+    /*Instruktionen im array anzeigen lassen*/
+    timeline.push(instructions);
+    var blue_trial = {
+  type: 'image-keyboard-response',
+  stimulus: 'img/cross_blue.png',
+  choices: ['b', 'o']
+
+};
+
+var orange_trial = {
+  type: 'image-keyboard-response',
+  stimulus: 'img/cross_orange.png',
+  choices: ['b', 'o']
+}
+timeline.push( orange_trial, blue_trial, orange_trial,blue_trial);
+var goodbye = {
+  type: "html-keyboard-response",
+  stimulus: "End of the experiment. Thank you for participating."
+};
+timeline.push(goodbye);
+/*Funktion zum Ausführen*/
+jsPsych.init({
+  timeline: timeline
+});
+
+  </script>
+</html>
