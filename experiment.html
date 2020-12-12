@@ -36,28 +36,36 @@ var instructions = {
           "</div>"+
           "<p>Press any key to begin.</p>",
           /*sagt mir wie schnell die Bilder nacheinander kommen*/
-      post_trial_gap: 1000
+      post_trial_gap: 2000
     };
     /*Instruktionen im array anzeigen lassen*/
     timeline.push(instructions);
-    var blue_trial = {
-  type: 'image-keyboard-response',
-  stimulus: 'img/cross_blue.png',
-  choices: ['b', 'o']
+    /* test trials */
+    var test_stimuli = [
+      { stimulus: "img/blue.png"},
+      { stimulus: "img/orange.png"}
+    ];
 
-};
+    var fixation = {
+      type: 'html-keyboard-response',
+      stimulus: '<div style="font-size:60px;">+</div>',
+      choices: jsPsych.NO_KEYS,
+      trial_duration: 1000,
+    }
 
-var orange_trial = {
-  type: 'image-keyboard-response',
-  stimulus: 'img/cross_orange.png',
-  choices: ['b', 'o']
-}
-timeline.push( orange_trial, blue_trial, orange_trial,blue_trial);
-var goodbye = {
-  type: "html-keyboard-response",
-  stimulus: "End of the experiment. Thank you for participating."
-};
-timeline.push(goodbye);
+    var test = {
+      type: "image-keyboard-response",
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      choices: ['f', 'j']
+    }
+
+    var test_procedure = {
+      timeline: [fixation, test],
+      timeline_variables: test_stimuli
+    }
+timeline.push(test_procedure);
+
+
 /*Funktion zum Ausführen*/
 jsPsych.init({
   timeline: timeline
